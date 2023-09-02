@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/data/question_data.dart';
 import 'package:quiz_app/home_page.dart';
 import 'package:quiz_app/question.dart';
 
@@ -14,7 +15,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Widget ?activeScreen;
+  List<String> selectedAnswers = [];
+  choseAnswer(String answer) {
+    selectedAnswers.add(answer);
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        selectedAnswers = [];
+        activeScreen = HomePage(setScreen);
+      });
+    }
+  }
+
+  Widget? activeScreen;
   @override
   void initState() {
     activeScreen = HomePage(setScreen);
@@ -23,7 +35,9 @@ class _MyAppState extends State<MyApp> {
 
   void setScreen() {
     setState(() {
-      activeScreen = QuestionScreen();
+      activeScreen = QuestionScreen(
+        onSelectedAnswer: choseAnswer,
+      );
     });
   }
 
@@ -31,7 +45,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
         title: 'Quiz App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
