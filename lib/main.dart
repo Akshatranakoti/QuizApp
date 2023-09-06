@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/data/question_data.dart';
 import 'package:quiz_app/home_page.dart';
 import 'package:quiz_app/question.dart';
+import 'package:quiz_app/result_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,8 +21,9 @@ class _MyAppState extends State<MyApp> {
     selectedAnswers.add(answer);
     if (selectedAnswers.length == questions.length) {
       setState(() {
-        selectedAnswers = [];
-        activeScreen = HomePage(setScreen);
+        activeScreen = ResultScreen(
+          chosenAnswers: selectedAnswers,
+        );
       });
     }
   }
